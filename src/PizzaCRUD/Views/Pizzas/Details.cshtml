@@ -1,13 +1,13 @@
 @model PizzaCRUD.Models.Pizza
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Szczegóły";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły</h2>
 
 <div>
-    <h4>Pizza</h4>
+    <h4>Pizza @Model.Name</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -15,12 +15,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DoughType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.PriceLarge)
@@ -54,6 +48,6 @@
     </dl>
 </div>
 <p>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edycja</a> |
+    <a asp-action="Index">Powrót do menu</a>
 </p>

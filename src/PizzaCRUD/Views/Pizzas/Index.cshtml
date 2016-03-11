@@ -2,22 +2,22 @@
 @model IEnumerable<PizzaCRUD.Models.Pizza>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Menu";
 }
 
-<h2>Index</h2>
+<h2>Menu</h2>
 <div class="row">
     <div class="col-md-3">
-        <a asp-action="Create" class="btn btn-success">Create New</a>
+        <a asp-action="Create" class="btn btn-success">+ nowa pizza</a>
     </div>
     <div class="col-md-5"></div>
     <div class="col-md-4">
         <form asp-action="Search" id="search-form">
             @Html.AntiForgeryToken()
             <div class="input-group">
-                <input type="text" placeholder="search" class="form-inline form-control" name="query" />
+                <input type="text" placeholder="nazwa pizzy..." class="form-inline form-control" name="query" />
                 <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default form-inline" name="submit">Search</button>
+                    <button type="submit" class="btn btn-default form-inline" name="submit">szukaj</button>
                 </div>
             </div>
 
@@ -66,9 +66,9 @@
                     @Html.DisplayFor(modelItem => item.PriceSmall)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edycja</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Szczegóły</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Usuń</a>
                 </td>
             </tr>
         }

@@ -2,13 +2,13 @@
 @model IEnumerable<PizzaCRUD.Models.Ingridient>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Składniki";
 }
 
-<h2>Index</h2>
+<h2>Składniki</h2>
 
 <p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
+    <a asp-action="Create" class="btn btn-success">+ dodaj składnik</a>
 </p>
 <table class="table">
     <tr>
@@ -26,9 +26,9 @@
         <td>
             @if (!MandatoryIngridients.Ingridients.Contains(item.Name))
             {
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edycja</a> 
+                @*<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Szczegóły</a>*@ 
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Usuń</a>
             }
             else
             {

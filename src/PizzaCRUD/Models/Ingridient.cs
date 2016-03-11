@@ -16,7 +16,7 @@ namespace PizzaCRUD.Models
 
         [Required(ErrorMessage = "Pole {0} jest wymagane")]
         [Display(Name = "Nazwa")]
-        [StringLength(64,ErrorMessage = "Maksymalnie 64 znaki")]
+        [StringLength(64,ErrorMessage = "Nazwa musi mieć długość od 2 do 64 znaków",MinimumLength = 2)]
         public string Name { set; get; }
 
         public ICollection<PizzaIngridient> Pizzas { set; get; }

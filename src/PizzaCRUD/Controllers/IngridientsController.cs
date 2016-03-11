@@ -52,7 +52,12 @@ namespace PizzaCRUD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Ingridient ingridient)
         {
-            ingridient.Name = ingridient.Name.ToLowerInvariant();
+            ingridient.Name = (ingridient.Name ?? "").Trim();
+            if (string.IsNullOrEmpty(ingridient.Name))
+            {
+                ModelState.AddModelError("", "Nazwa nie może być pusta!");
+            }
+
             if (ModelState.IsValid)
             {
                 if (!Db.Ingridients.Any(igr => igr.Name == ingridient.Name))
@@ -92,6 +97,17 @@ namespace PizzaCRUD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Ingridient ingridient)
         {
+            if (Db.Ingridients.Any(igr => igr.Name == ingridient.Name))
+            {
+                ModelState.AddModelError("","Taki składnik już istnieje!");;
+            }
+
+            ingridient.Name = (ingridient.Name ?? "").Trim();
+            if (string.IsNullOrEmpty(ingridient.Name))
+            {
+                ModelState.AddModelError("", "Nazwa nie może być pusta!");
+            }
+
             if (ModelState.IsValid)
             {
                 Db.Update(ingridient);

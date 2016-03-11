@@ -2,17 +2,18 @@
 @model PizzaCRUD.Models.Pizza
 
 @{
-    ViewData["Title"] = "Create";
+    var actionType = ViewBag.ActionType as string;
+    var title = actionType.ToLower() == "edit" ? "Edycja pizzy" : "Nowa pizza";
+    ViewData["Title"] = title;
 }
 
-<h2>@ViewBag.ActionType</h2>
+<h2>@title</h2>
 
-<form asp-action="@ViewBag.ActionType">
+<form asp-action="@actionType">
     <div class="form-horizontal">
-        <h4>Pizza</h4>
         <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
-        @if (ViewBag.ActionType.ToLower() == "edit")
+        @if (actionType.ToLower() == "edit")
         {
             @Html.HiddenFor(model=>model.Id)
         }
@@ -79,14 +80,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="@ViewBag.ActionType.ToUpper()" class="btn btn-default" />
+                <input type="submit" value="@(actionType.ToLower() == "edit" ? "Edytuj" : "Dodaj")" class="btn btn-default" />
             </div>
         </div>
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Powrót do menu</a>
 </div>
 
 @section Scripts {
