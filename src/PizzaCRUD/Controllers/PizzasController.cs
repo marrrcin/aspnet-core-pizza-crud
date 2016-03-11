@@ -88,6 +88,7 @@ namespace PizzaCRUD.Controllers
         public async Task<IActionResult> Create(Pizza pizza)
         {
             ViewBag.ActionType = "Create";
+            ValidateName(pizza);
             if (ModelState.IsValid)
             {
                 if (!Db.Pizzas.Any(p => p.Name == pizza.Name))
@@ -103,6 +104,15 @@ namespace PizzaCRUD.Controllers
             }
             SelectAllIngridients(pizza);
             return View("CreateEdit",pizza);
+        }
+
+        protected virtual void ValidateName(Pizza pizza)
+        {
+            pizza.Name = (pizza.Name ?? "").Trim();
+            if (string.IsNullOrEmpty(pizza.Name))
+            {
+                ModelState.AddModelError("", "Nazwa pizzy nie może być pusta!");
+            }
         }
 
         protected virtual void SelectAllIngridients(Pizza pizza)
@@ -168,6 +178,7 @@ namespace PizzaCRUD.Controllers
         public async Task<IActionResult> Edit(Pizza pizza)
         {
             ViewBag.ActionType = "Edit";
+            ValidateName(pizza);
             if (ModelState.IsValid)
             {
                 Db.PizzaIngridients.Where(pi=>pi.PizzaId == pizza.Id).ToList().ForEach(pi=> Db.PizzaIngridients.Remove(pi));

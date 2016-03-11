@@ -91,7 +91,7 @@ else
     <script type="text/javascript">
         $("#search-form").on("submit",function(args) {
             var q = $("input[name='query']").val();
-            if (q.length === 0) {
+            if (q.trim().length === 0) {
                 args.preventDefault();
                 alert("Wpisz nazwę pizzy lub jej fragment!");
             }
