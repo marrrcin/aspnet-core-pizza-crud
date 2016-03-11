@@ -1,0 +1,41 @@
+@using PizzaCRUD.Controllers
+@model IEnumerable<PizzaCRUD.Models.Ingridient>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @if (!MandatoryIngridients.Ingridients.Contains(item.Name))
+            {
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            }
+            else
+            {
+                <span>Składnik obowiązkowy</span>
+            }
+            
+        </td>
+    </tr>
+}
+</table>

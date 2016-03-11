@@ -1,0 +1,59 @@
+@model PizzaCRUD.Models.Pizza
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pizza</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DoughType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DoughType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceLarge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceLarge)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceMedium)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceMedium)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceSmall)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceSmall)
+        </dd>
+        <dt>
+            Składniki
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var ingr in Model.UsedIngridients.Where(i=>i.Value))
+                {
+                    <li>@ingr.Key</li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>

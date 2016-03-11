@@ -1,0 +1,101 @@
+@using PizzaCRUD.Controllers
+@model PizzaCRUD.Models.Pizza
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>@ViewBag.ActionType</h2>
+
+<form asp-action="@ViewBag.ActionType">
+    <div class="form-horizontal">
+        <h4>Pizza</h4>
+        <hr />
+        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+        @if (ViewBag.ActionType.ToLower() == "edit")
+        {
+            @Html.HiddenFor(model=>model.Id)
+        }
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            @{
+                if (Model.DoughType == null)
+                {
+                    Model.DoughType = "c";
+                }
+            }
+            <label asp-for="DoughType" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <label>
+                    <input type="radio" name="DoughType" value="grube" @(Model.DoughType.StartsWith("g") ? "checked" : "")/>
+                    grube
+                </label>
+                <label>
+                    <input type="radio" name="DoughType" value="cieńkie" @(Model.DoughType.StartsWith("c") ? "checked" : "")/>
+                    cieńkie
+                </label>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PriceLarge" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PriceLarge" class="form-control" data-val-number="Pole Cena (L) musi być cyfrą" />
+                <span asp-validation-for="PriceLarge" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PriceMedium" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PriceMedium" class="form-control" data-val-number="Pole Cena (M) musi być cyfrą"/>
+                <span asp-validation-for="PriceMedium" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PriceSmall" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PriceSmall" class="form-control" data-val-number="Pole Cena (S) musi być cyfrą"/>
+                <span asp-validation-for="PriceSmall" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <strong class="col-md-2 control-label">Składniki:</strong>
+            <span class="col-md-12"></span>
+            @foreach (var ingr in Model.UsedIngridients)
+            {
+                <div class="col-md-push-2 col-md-10">
+                    @{ bool shouldBeDisabled = MandatoryIngridients.Ingridients.Contains(ingr.Key); }
+                    <label for="@(nameof(Model.UsedIngridients))[@(ingr.Key)]">@ingr.Key</label>
+                    <input type="checkbox" name="@(nameof(Model.UsedIngridients))[@(ingr.Key)]" @(shouldBeDisabled || ingr.Value ? "checked" : "") value="true" data-mandatory="@shouldBeDisabled.ToString().ToLower()"/>
+                </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="@ViewBag.ActionType.ToUpper()" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        $("input[type='checkbox'][data-mandatory='true']").on("click", function(args) {
+            args.preventDefault();
+        });
+    </script>
+}

@@ -1,0 +1,100 @@
+@using Microsoft.AspNet.Http.Extensions
+@model IEnumerable<PizzaCRUD.Models.Pizza>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+<div class="row">
+    <div class="col-md-3">
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </div>
+    <div class="col-md-5"></div>
+    <div class="col-md-4">
+        <form asp-action="Search" id="search-form">
+            @Html.AntiForgeryToken()
+            <div class="input-group">
+                <input type="text" placeholder="search" class="form-inline form-control" name="query" />
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default form-inline" name="submit">Search</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoughType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceLarge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceMedium)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceSmall)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DoughType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriceLarge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriceMedium)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriceSmall)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    if (Context.Request.GetDisplayUrl().ToLower().Contains("search"))
+    {
+        <h2>Brak pizz o podanej nazwie!</h2>
+        <a asp-action="Index">Powrót do MENU</a>
+    }
+    else
+    {
+        <h2>Brak pizz!</h2>
+    }
+
+}
+@section scripts{
+    <script type="text/javascript">
+        $("#search-form").on("submit",function(args) {
+            var q = $("input[name='query']").val();
+            if (q.length === 0) {
+                args.preventDefault();
+                alert("Wpisz nazwę pizzy lub jej fragment!");
+            }
+        })
+    </script>
+}
